@@ -1,0 +1,38 @@
+;; ~/.config/kanata.kbd
+(defcfg)
+(defalias
+  ;; german keys
+  \ AG--
+  | AG-102d
+  } AG-0
+  { AG-7
+  ] AG-9
+  [ AG-8
+  : S-.
+)
+
+(defalias
+  cam (layer-toggle capsasmod)
+  cap (tap-hold-press 100 100 esc @cam)
+)
+
+(defsrc
+  esc
+  grv
+  tab  q w e r t z u i o p
+  caps a s d f g h j k l
+)
+
+(deflayer base
+  caps 
+  _    
+  _    _ _ _ _ _ _ _ _ _ _
+  @cap _ _ _ _ _ _ _ _ _ 
+)
+
+(deflayer capsasmod
+  XX
+  _
+  _  _ @| @[ @] @\ _ _ _ _ _
+  XX _ @: @{ @} _  _ _ _ _
+)
