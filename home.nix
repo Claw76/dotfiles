@@ -68,6 +68,7 @@ in {
 	xdg.configFile."alacritty.yml".source = ./alacritty.yml;
 	xdg.configFile."kanata.kbd".source = ./kanata.kbd;
 	xdg.configFile."systemd/user/kanata.service".source = ./kanata.service;
+	xdg.configFile."nvim".source = ./nvim;
 
 	home.sessionVariables = {
 		LESS = "$LESS -R -Q"; # quiet less
