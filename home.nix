@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
-
-{
+let
+	media = "${config.home.homeDirectory}/Media";
+	other = "${config.home.homeDirectory}/Other";
+in {
 	home.username = "len";
 	home.homeDirectory = "/home/len";
 	home.stateVersion = "23.05";
@@ -8,6 +10,16 @@
 	programs.home-manager.enable = true;
 
 	xdg.enable = true;
+	xdg.userDirs = {
+		enable = true;
+		createDirectories = true;
+		music = "${media}";
+		pictures = "${media}";
+		videos = "${media}";
+		publicShare = "${other}";
+		templates = "${other}";
+	};
+
 	# xdg.desktopEntries = {
 	#	alacritty = {
 	#		name = "Alacritty";
@@ -56,7 +68,6 @@
 	xdg.configFile."alacritty.yml".source = ./alacritty.yml;
 	xdg.configFile."kanata.kbd".source = ./kanata.kbd;
 	xdg.configFile."systemd/user/kanata.service".source = ./kanata.service;
-	
 
 	home.sessionVariables = {
 		LESS = "$LESS -R -Q"; # quiet less
