@@ -39,6 +39,7 @@ in {
 		# vscode
 		kanata
 		sshpass 
+		lazygit
 	];
 
 	programs = {
@@ -61,6 +62,11 @@ in {
 			history.path = "${config.xdg.configHome}/zsh/zsh_history";
 			oh-my-zsh.enable = true;
 		};
+		fzf = {
+			enable = true;
+			enableZshIntegration = true;
+		};
+
 		# import starship.nix and pass "lib" to it
 		starship = import ./starship.nix lib;
 	};
