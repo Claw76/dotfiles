@@ -47,6 +47,7 @@ in {
 			defaultEditor = true;
 			plugins = with pkgs.vimPlugins; [
 				nvim-treesitter.withAllGrammars
+				onedark-nvim
 			];
 		};
 		git = {
