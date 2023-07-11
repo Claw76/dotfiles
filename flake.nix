@@ -34,7 +34,6 @@
         name = "prepare-home";
         runtimeInputs = [ ];
         text = ''
-# nix run github:Claw76/dotfiles#homeConfigurations.len.activationPackage
           sudo groupadd uinput
           sudo usermod -aG input "$USER"
           sudo usermod -aG uinput "$USER"
@@ -42,7 +41,7 @@
           echo "KERNEL=='uinput', MODE='0660', GROUP='uinput', OPTIONS+='static_node=uinput'" | \
           sudo tee -a /etc/udev/rules.d/kanata.rules > /dev/null
           sudo modprobe uinput
-# systemctl --user enable kanata.service
+          rm -f $HOME/.config/user-dirs.dirs # TODO: Warning + confirm here
           '';
       };
 
@@ -50,19 +49,19 @@
         name = "post-home";
         runtimeInputs = [ ];
         text = ''
-# Enable kanata service
+          # Enable kanata service
           # systemctl --user enable kanata.service
 
-# Set zsh to default login shell
+          # Set zsh to default login shell
           echo "/home/$USER/.nix-profile/bin/zsh" | \
           sudo tee -a /etc/shells > /dev/null
           # source /etc/shells # not sure if this works
           chsh -s "$(which zsh)"
 
-# Disable .sudo_as_admin_successful & sudo reminder
-# touch /etc/sudoers.d/disable_admin_file_in_home
-# echo "Defaults !admin_flag" | \
-# sudo tee -a /etc/sudoers.d/disable_admin_file_in_home > /dev/null
+          # Disable .sudo_as_admin_successful & sudo reminder
+          # touch /etc/sudoers.d/disable_admin_file_in_home
+          # echo "Defaults !admin_flag" | \
+          # sudo tee -a /etc/sudoers.d/disable_admin_file_in_home > /dev/null
           '';
       };
 
