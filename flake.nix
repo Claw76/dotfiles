@@ -41,7 +41,7 @@
           echo "KERNEL=='uinput', MODE='0660', GROUP='uinput', OPTIONS+='static_node=uinput'" | \
           sudo tee -a /etc/udev/rules.d/kanata.rules > /dev/null
           sudo modprobe uinput
-          rm -f $HOME/.config/user-dirs.dirs # TODO: Warning + confirm here
+          rm -f "$HOME/.config/user-dirs.dirs" # TODO: Warning + confirm here
           '';
       };
 
