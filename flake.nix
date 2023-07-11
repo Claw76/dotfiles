@@ -70,9 +70,9 @@
         name = "make-home";
         runtimeInputs = [ ];
         text = ''
-          nix run .#prepare
-          nix run .#homeConfigurations.len.activationPackage
-          nix run .#post
+          nix run github:Claw76/dotfiles#prepare
+          nix run github:Claw76/dotfiles#homeConfigurations.len.activationPackage
+          nix run github:Claw76/dotfiles#post
           echo "Run systemctl --user enable kanata.service and reboot"
           '';
       };
