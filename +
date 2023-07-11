@@ -35,7 +35,7 @@
         runtimeInputs = [ ];
         text = ''
 # nix run github:Claw76/dotfiles#homeConfigurations.len.activationPackage
-          sudo groupadd uinput
+          # sudo groupadd uinput
           sudo usermod -aG input "$USER"
           sudo usermod -aG uinput "$USER"
           sudo touch /etc/udev/rules.d/kanata.rules
@@ -51,13 +51,13 @@
         runtimeInputs = [ ];
         text = ''
 # Enable kanata service
-          # systemctl --user enable kanata.service
+          systemctl --user enable kanata.service
 
 # Set zsh to default login shell
           echo "/home/$USER/.nix-profile/bin/zsh" | \
           sudo tee -a /etc/shells > /dev/null
           # source /etc/shells # not sure if this works
-          chsh -s "$(which zsh)"
+          chsh -s $(which zsh)
 
 # Disable .sudo_as_admin_successful & sudo reminder
 # touch /etc/sudoers.d/disable_admin_file_in_home
@@ -73,7 +73,7 @@
           nix run .#prepare
           nix run .#homeConfigurations.len.activationPackage
           nix run .#post
-          echo "Run systemctl --user enable kanata.service and reboot"
+          echo "A reboot is suggested"
           '';
       };
     };
