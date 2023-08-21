@@ -40,6 +40,8 @@ in {
 		kanata
 		sshpass 
 		lazygit
+		tmux
+		vim
 	];
 
 	programs = {
@@ -66,7 +68,11 @@ in {
 			enable = true;
 			enableZshIntegration = true;
 		};
-
+		tmux = {
+			enable = true;
+			mouse = true;
+			clock24 = true;
+		};
 		# import starship.nix and pass "lib" to it
 		starship = import ./starship.nix lib;
 	};
