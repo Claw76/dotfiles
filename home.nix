@@ -9,6 +9,8 @@ in {
 
 	# let home-manager manage itself
 	programs.home-manager.enable = true;
+	# should improve experience on non-nixos distros 
+	targets.genericLinux.enable = true;
 
 	xdg.enable = true;
 	xdg.userDirs = {
@@ -20,14 +22,9 @@ in {
 		publicShare = "${other}";
 		templates = "${other}";
 	};
-	# xdg.desktopEntries = {
-	#	alacritty = {
-	#		name = "Alacritty";
-	#		genericName = "Terminal";
-	#		exec = "alacritty";
-	#		terminal = false;
-	#	};
-	# };
+	# As GUI apps installed through nix+hm have problems anyway, do not add this yet 
+	# xdg.mime.enable = true;
+	# xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
 
 	fonts.fontconfig.enable = true;
 
@@ -81,6 +78,9 @@ in {
 			dotDir = ".config/zsh";
 			history.path = "${config.xdg.configHome}/zsh/zsh_history";
 			oh-my-zsh.enable = true;
+			shellAliases = {
+				"home-manager-switch" = "home-manager switch --flake ~/Projects/dotfiles";
+			};
 		};
 		fzf = {
 			enable = true;
@@ -105,4 +105,7 @@ in {
 		LESS = "$LESS -R -Q"; # quiet less
 	};
 
+	home.shellAliases = {
+		hms = "home-manager switch --flake ~/Projects/dotfiles";
+	};
 }
