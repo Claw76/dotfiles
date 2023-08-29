@@ -6,6 +6,7 @@ in {
 	home.username = "len";
 	home.homeDirectory = "/home/len";
 	home.stateVersion = "23.05";
+
 	# let home-manager manage itself
 	programs.home-manager.enable = true;
 
@@ -19,7 +20,6 @@ in {
 		publicShare = "${other}";
 		templates = "${other}";
 	};
-
 	# xdg.desktopEntries = {
 	#	alacritty = {
 	#		name = "Alacritty";
@@ -43,6 +43,24 @@ in {
 		tmux
 		vim
 	];
+
+	systemd.user.services = {
+		kanata = {
+			Unit = {
+				Description = "Kanata keyboard remapper";
+				Documentation = [ "https://github.com/jtroo/kanata" ];
+			};
+			Service = {
+				Environment=["DISPLAY=:0"];
+				Type="simple";
+				ExecStart="/home/len/.nix-profile/bin/kanata --cfg /home/len/.config/kanata.kbd";
+				Restart="no";
+			};
+			Install = {
+				WantedBy=["default.target"];
+			};
+		};
+	};
 
 	programs = {
 		neovim = {
@@ -80,10 +98,11 @@ in {
 	# home-managers alacritty config does not work for the flatpak
 	xdg.configFile."alacritty.yml".source = ./alacritty.yml;
 	xdg.configFile."kanata.kbd".source = ./kanata.kbd;
-	xdg.configFile."systemd/user/kanata.service".source = ./kanata.service;
+	# xdg.configFile."systemd/user/kanata.service".source = ./kanata.service;
 	xdg.configFile."nvim".source = ./nvim;
 
 	home.sessionVariables = {
 		LESS = "$LESS -R -Q"; # quiet less
 	};
+
 }
