@@ -25,6 +25,12 @@ in {
 	# As GUI apps installed through nix+hm have problems anyway, do not add this yet 
 	# xdg.mime.enable = true;
 	# xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
+	# Nix GUI apps using OpenGL dont work 
+	# solution would/should be NixGL but that is poorly integrated
+	# into Nix+hm on non-NixOS distros
+
+	xdg.mime.enable = true;
+	xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
 
 	fonts.fontconfig.enable = true;
 

@@ -35,6 +35,7 @@ install_essentials() {
 purge_unneeded() {
     local packages
     packages=(
+        firefox
         firefox*
         libreoffice*
         simple-scan
