@@ -29,14 +29,21 @@ main() {
     set_gnome_settings
     setup_for_kanata
 
-    # TODO: Install Nix
+    install_nix
+    echo "Run the command given to you"
+    echo "do source setup.sh"
+    echo "run setup_home_manager"
+    echo "u better reboot"
+    echo "then source setup.sh again"
+    echo "then run set_shell_nix_zsh"
+
     # TODO: Install home-manager
     # TODO: Recommend reboot
     # TODO: set_shell_nix_zsh
 
 }
 
-install_essentials() {
+_install_essentials() {
     local packages
     packages=(
         apt-transport-https
@@ -74,7 +81,6 @@ install_nix() {
     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 }
 
-
 set_gnome_settings() {
     gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 24
     gsettings set org.gnome.shell.keybindings toggle-overview "['<Super>Tab']"
@@ -88,12 +94,6 @@ set_gnome_settings() {
     # gsettings set org.gnome.desktop.interface monospace-font-name "JetBrainsMonoNL Nerd Font"
 }
 
-set_shell_nix_zsh() {
-    echo "/home/$USER/.nix-profile/bin/zsh" | \
-    sudo tee -a /etc/shells > /dev/null
-    chsh -s "$(which zsh)"
-}
-
 setup_for_kanata() {
     sudo groupadd uinput
     sudo usermod -aG uinput "$USER"
@@ -104,6 +104,11 @@ setup_for_kanata() {
     sudo modprobe uinput
 }
 
+set_shell_nix_zsh() {
+    echo "/home/$USER/.nix-profile/bin/zsh" | \
+    sudo tee -a /etc/shells > /dev/null
+    chsh -s "$(which zsh)"
+}
 
 setup_home_manager() {   
     mkdir -p ~/.local/state/nix/profiles
