@@ -2,15 +2,28 @@
 let
 	media = "${config.home.homeDirectory}/Media";
 	other = "${config.home.homeDirectory}/Other";
+	nixgl = pkgs.nixgl;
+	nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" {} ''
+		mkdir $out
+		ln -s ${pkg}/* $out
+		rm $out/bin
+		mkdir $out/bin
+		for bin in ${pkg}/bin/*; do
+		wrapped_bin=$out/bin/$(basename $bin)
+		echo "exec ${lib.getExe nixgl.auto.nixGLDefault} $bin \"\$@\"" > $wrapped_bin
+		chmod +x $wrapped_bin
+		done
+	'';
 in {
 	home.username = "len";
 	home.homeDirectory = "/home/len";
 	home.stateVersion = "23.05";
 
-	# let home-manager manage itself
-	programs.home-manager.enable = true;
-	# should improve experience on non-nixos distros 
-	targets.genericLinux.enable = true;
+	programs.home-manager.enable = true; # home-manager self management
+	targets.genericLinux.enable = true; # improve experience on non-nixos distros
+
+	# TODO: On home activation update x desktop application cache
+  # TODO: "Hide" nixgl behind auto-detection of --impure flag
 
 	xdg.enable = true;
 	xdg.userDirs = {
@@ -23,26 +36,22 @@ in {
 		templates = "${other}";
 	};
 
-	# Nix GUI apps using OpenGL dont work 
-	# solution would/should be NixGL but that is poorly integrated
-	# into Nix+hm on non-NixOS distros
-
 	xdg.mime.enable = true;
 	xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
 
 	fonts.fontconfig.enable = true;
 
-	home.packages = with pkgs; [
+  home.packages = with pkgs; [
 		# github:loichyan/nerdfix flake to fix Nerd Font icon problems
 		# override nerdfonts to only download JetBrainsMono
 		(nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-		# alacritty
-		# vscode
 		kanata
 		sshpass 
 		lazygit
 		tmux
 		vim
+		nixgl.auto.nixGLDefault
+		(nixGLWrap alacritty)
 	];
 
 	systemd.user.services = {
@@ -54,7 +63,7 @@ in {
 			Service = {
 				Environment=["DISPLAY=:0"];
 				Type="simple";
-				ExecStart="/home/len/.nix-profile/bin/kanata --cfg /home/len/.config/kanata.kbd";
+				ExecStart="${config.home.homeDirectory}/.nix-profile/bin/kanata --cfg ${config.home.homeDirectory}/.config/kanata.kbd";
 				Restart="no";
 			};
 			Install = {
@@ -82,9 +91,6 @@ in {
 			dotDir = ".config/zsh";
 			history.path = "${config.xdg.configHome}/zsh/zsh_history";
 			oh-my-zsh.enable = true;
-			shellAliases = {
-				"home-manager-switch" = "home-manager switch --flake ~/Projects/dotfiles";
-			};
 		};
 		fzf = {
 			enable = true;
@@ -109,6 +115,6 @@ in {
 	};
 
 	home.shellAliases = {
-		hms = "home-manager switch --flake ~/Projects/dotfiles";
+		hms = "echo 'warning: This is using the --impure flag!' && home-manager switch --flake ~/Projects/dotfiles --impure";
 	};
 }
