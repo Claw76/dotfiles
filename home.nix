@@ -54,6 +54,7 @@ in {
 		(nixGLWrap alacritty)
 	];
 
+	systemd.user.startServices = true;
 	systemd.user.services = {
 		kanata = {
 			Unit = {

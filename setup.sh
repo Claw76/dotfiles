@@ -31,7 +31,7 @@ main() {
 
     # TODO: Install Nix
     # TODO: Install home-manager
-    # TODO: Remind of reboot
+    # TODO: Recommend reboot
     # TODO: set_shell_nix_zsh
 
 }
@@ -117,6 +117,7 @@ setup_home_manager() {
     home-manager switch --flake ~/Projects/dotfiles --impure
 
     gsettings set org.gnome.desktop.interface monospace-font-name "JetBrainsMonoNL Nerd Font"
+    # TODO: Recommend another reboot
 }
 
 for arg in "$@"; do
