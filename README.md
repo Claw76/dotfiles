@@ -1,6 +1,12 @@
 # dotfiles
 My nix home-manager dotfiles repo
 
+## setup script
+
+> [!WARN] not finished
+> - only Pop!_OS for now
+> - running script multiple times creates errors
+
 ## Used Resources
 - https://www.reddit.com/r/NixOS/comments/108fwwh/tradeoffs_of_using_home_manager_for_neovim_plugins/
 - https://www.reddit.com/r/NixOS/comments/104l0w9/comment/j362asl/?context=3
