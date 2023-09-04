@@ -1,29 +1,45 @@
 #!/bin/bash
 
+# TODO: Use a setup.log file to log which steps have been done already
+#       Also use this to skip steps already done
+
 main() {
-    update_and_grade
-    purge_unneeded
-    install_essentials
-    # install_via_nala
-    install_flatpaks
+    sudo apt-get update
+    sudo apt-get upgrade -y
+
+    sudo apt-get install apt-transport-https git curl wget gpg axel nala -y
+    sudo apt-get purge firefox libreoffice* -y
+    
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+    rm -f packages.microsoft.gpg
+
+    sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+    sudo apt-get update
+    sudo nala update
+    sudo nala install gnome-tweaks ubunu-restricted-extras -y
+    sudo nala install brave-browser code  -y
+
+    flatpak install com.github.tchx84.Flatseal -y
+
     disable_annoying_admin_files
     set_gnome_settings
-    install_nix
-}
-
-post_setup() { 
-    set_shell_nix_zsh
     setup_for_kanata
-}
 
-update_and_grade() {
-    sudo apt-get update
-    sudo apt-get upgrade
+    # TODO: Install Nix
+    # TODO: Install home-manager
+    # TODO: Remind of reboot
+    # TODO: set_shell_nix_zsh
+
 }
 
 install_essentials() {
     local packages
     packages=(
+        apt-transport-https
         git 
         curl 
         axel 
@@ -31,39 +47,6 @@ install_essentials() {
     )
     sudo apt-get install "${packages[@]}" -y 
 }
- 
-purge_unneeded() {
-    local packages
-    packages=(
-        firefox
-        firefox*
-        libreoffice*
-        simple-scan
-        popsicle*
-    )
-    sudo apt-get purge "${packages[@]}" -y
-}
-
-install_via_nala() {
-    local packages
-    packages=(
-        ubuntu-restricted-extras
-        gnome-tweaks
-    )
-    sudo nala install "${packages[@]}" -y
-}
-
-install_flatpaks() {
-    local packages
-    packages=(
-        com.brave.Browser
-        com.github.tchx84.Flatseal
-    )
-    flatpak install "${packages[@]}" -y
-}
-        # com.discordapp.Discord
-        # com.spotify.Client
-
 
 # shellcheck disable=2154
 disable_annoying_admin_files() {
@@ -122,13 +105,17 @@ setup_for_kanata() {
 }
 
 
-setup_home_manager() {
-	mkdir -p ~/.local/state/nix/profiles
+setup_home_manager() {   
+    mkdir -p ~/.local/state/nix/profiles
     nix run home-manager/release-23.05 -- init --switch
+
+    # TODO: Warn that this will overwrite the current user-dir config
     mkdir -p ~/Projects/dotfiles
-    git clone https://github.com/Claw76/dotfiles.git ~/Projects/dotfiles/
+    git clone git@github.com:Claw76/dotfiles.git ~/Projects/dotfiles/
     rm -f "$HOME/.config/user-dirs.dirs"
-    home-manager switch --flake ~/Projects/dotfiles
+    # TODO: Warn that this is impure because of nixGL
+    home-manager switch --flake ~/Projects/dotfiles --impure
+
     gsettings set org.gnome.desktop.interface monospace-font-name "JetBrainsMonoNL Nerd Font"
 }
 
