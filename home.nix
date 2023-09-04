@@ -22,9 +22,7 @@ in {
 		publicShare = "${other}";
 		templates = "${other}";
 	};
-	# As GUI apps installed through nix+hm have problems anyway, do not add this yet 
-	# xdg.mime.enable = true;
-	# xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
+
 	# Nix GUI apps using OpenGL dont work 
 	# solution would/should be NixGL but that is poorly integrated
 	# into Nix+hm on non-NixOS distros
@@ -104,7 +102,6 @@ in {
 	# home-managers alacritty config does not work for the flatpak
 	xdg.configFile."alacritty.yml".source = ./alacritty.yml;
 	xdg.configFile."kanata.kbd".source = ./kanata.kbd;
-	# xdg.configFile."systemd/user/kanata.service".source = ./kanata.service;
 	xdg.configFile."nvim".source = ./nvim;
 
 	home.sessionVariables = {
