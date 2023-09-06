@@ -3,7 +3,8 @@ My nix home-manager dotfiles repo
 
 ## setup script
 
-> [!WARN] not finished
+> [!WARNING]  
+> Not Finished
 > - only Pop!_OS for now
 > - running script multiple times creates errors
 
