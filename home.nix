@@ -113,6 +113,8 @@ in {
 
 	home.sessionVariables = {
 		LESS = "$LESS -R -Q"; # quiet less
+		# BUN_INSTALL="$HOME/.bun";
+		# PATH="$BUN_INSTALL/bin:$PATH";
 	};
 
 	home.shellAliases = {
