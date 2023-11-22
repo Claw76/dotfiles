@@ -83,6 +83,18 @@ in
 			}
 			];
 
+            shellAliases = {
+                "..." = "./..";
+				"...." = "././..";
+				cd = "z";
+				nix-gc = "nix-collect-garbage --delete-old";
+				show_path = "echo $PATH | tr ':' '\n'";
+
+				pbcopy = "/mnt/c/Windows/System32/clip.exe";
+                pbpaste = "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command 'Get-Clipboard'";
+				explorer = "/mnt/c/Windows/explorer.exe";
+			};
+
 			initExtra = ''
 				WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
