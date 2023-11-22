@@ -69,5 +69,17 @@
     };
   };
   
+  # isolate this into each machine config
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "gnome-session";
+  services.xrdp.port = 3411;
+  services.xrdp.openFirewall = true;
+
+  # networking.firewall.allowedTCPPorts = [ 3389 ];
+
   system.stateVersion = "23.05";
 }

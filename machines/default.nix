@@ -1,4 +1,4 @@
-{ lib, inputs, nixpkgs, nixpkgs-unstable, nur, home-manager, nixos-wsl, nix-index-database, username, ... }:
+{ lib, inputs, nixpkgs, nixpkgs-unstable, nur, home-manager, nixos-wsl, nix-index-database, flake-utils, nixgl, username, ... }:
 
 let
 system = "x86_64-linux";
@@ -15,6 +15,7 @@ nixpkgsWithOverlays = with inputs; rec
   };
   overlays = [
     nur.overlay
+    nixgl.overlay
       (_final: prev: {
       # this allows us to reference pkgs.unstable
        unstable = import nixpkgs-unstable {
@@ -38,7 +39,7 @@ in
     inherit system;
     specialArgs = { inherit inputs username nix-index-database; };
     modules = [
-      configurationDefaults
+	configurationDefaults
 	nixos-wsl.nixosModules.wsl
 	./wsl
 	./configuration.nix

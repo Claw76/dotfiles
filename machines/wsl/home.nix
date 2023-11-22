@@ -1,20 +1,40 @@
-{ config, pkgs, lib, username, nix-index-database, ... }:
+{ config, pkgs, lib, username, ... }:
+let
+  	media = "${config.home.homeDirectory}/Media";
+	other = "${config.home.homeDirectory}/Other";
+in
 {
 	programs.home-manager.enable = true; # home-manager self management
 
-		home.packages = with pkgs; [
+	home.packages = with pkgs; [
 		kanata
-			sshpass 
-			lazygit
-			tmux
-			vim
-			zoxide
-		];
+		sshpass 
+		lazygit
+		tmux
+		vim
+		zoxide
+	];
+
+	xdg.enable = true;
+	xdg.userDirs = {
+		enable = true;
+		createDirectories = false;
+		music = "${media}";
+		pictures = "${media}";
+		videos = "${media}";
+		# publicShare = "${other}";
+		# templates = "${other}";
+	};
+
+	xdg.mime.enable = true;
+	xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
+
+	fonts.fontconfig.enable = true;
 
 	programs = {
 		direnv.nix-direnv.enable = true;		
 
-# import starship.nix and pass "lib" to it
+		# import starship.nix and pass "lib" to it
 		starship = import ./starship.nix lib;		
 
 		neovim = {
@@ -66,13 +86,14 @@
 			initExtra = ''
 				WORDCHARS='*?[]~=&;!#$%^(){}<>'
 
-# fixes duplication of commands when using tab-completion
+				# fixes duplication of commands when using tab-completion
 				export LANG=C.UTF-8
 				'';
 		};		
 	};
 
 	xdg.configFile."nvim".source = ./nvim;
+	xdg.configFile."alacritty.yml".source = ./alacritty.yml;
 
 	home.sessionVariables = {
 		LESS = "$LESS -R -Q"; # quiet less

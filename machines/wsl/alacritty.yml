@@ -1,0 +1,12 @@
+font:
+  normal:
+    family: "JetBrainsMono Nerd Font"
+    style: "Regular"
+cursor:
+  style:
+    shape: "Beam"
+    blinking: "On"
+  vi_mode_style:
+    shape: "Block"
+    blinking: "Off"
+live_config_reload: true
