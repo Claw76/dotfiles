@@ -86,7 +86,7 @@ in
             shellAliases = {
                 "..." = "./..";
 				"...." = "././..";
-				cd = "z";
+				# cd = "z";
 				nix-gc = "nix-collect-garbage --delete-old";
 				show_path = "echo $PATH | tr ':' '\n'";
 
