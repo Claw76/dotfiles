@@ -44,23 +44,23 @@
     '';
   };
 
-  services = {
-    pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      pulse.enable = true;
-    };
-  };
+  # services = {
+  #   pipewire = {
+  #     enable = true;
+  #     alsa = {
+  #       enable = true;
+  #       support32Bit = true;
+  #     };
+  #     pulse.enable = true;
+  #   };
+  # };
 
   fonts.fonts = [ pkgs.corefonts ];
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  # sound.enable = true;
+  # hardware.pulseaudio.enable = false;
 
-  programs.ssh.askPassword = "";
+  # programs.ssh.askPassword = "";
 
   virtualisation = {
     docker = {
@@ -70,14 +70,15 @@
   };
   
   # isolate this into each machine config
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  
+  # services.xserver.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 
-  services.xrdp.enable = true;
-  services.xrdp.defaultWindowManager = "gnome-session";
-  services.xrdp.port = 3411;
-  services.xrdp.openFirewall = true;
+  # services.xrdp.enable = true;
+  # services.xrdp.defaultWindowManager = "gnome-session";
+  # services.xrdp.port = 3411;
+  # services.xrdp.openFirewall = true;
 
   # networking.firewall.allowedTCPPorts = [ 3389 ];
 

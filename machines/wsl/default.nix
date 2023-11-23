@@ -11,18 +11,6 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  # Uncomment the next line to enable SSH
-  # services.openssh.enable = true;
-
-  users.users.${username} = {
-    # FIXME: add your own hashed password
-    # hashedPassword = "";
-    # FIXME: add your own ssh public key
-    # openssh.authorizedKeys.keys = [
-    #   "ssh-rsa ..."
-    # ];
-  };
-
   environment.systemPackages = [
     (import ./win32yank.nix {inherit pkgs;})
   ];
@@ -66,12 +54,6 @@
   nix = {
     settings = {
       trusted-users = [username];
-      # FIXME: use your access tokens from secrets.json here to be able to clone private repos on GitHub and GitLab
-      # access-tokens = [
-      #   "github.com=${secrets.github_token}"
-      #   "gitlab.com=OAuth2:${secrets.gitlab_token}"
-      # ];
-
       accept-flake-config = true;
       auto-optimise-store = true;
     };
