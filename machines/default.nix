@@ -35,7 +35,7 @@ configurationDefaults = {
 in
 {
   # WSL
-  nixos = lib.nixosSystem {
+  nixsl = lib.nixosSystem {
     inherit system;
     specialArgs = { inherit inputs username nix-index-database; };
     modules = [

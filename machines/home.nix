@@ -36,8 +36,6 @@ in {
   programs.fzf.enable = true;
   programs.fzf.enableZshIntegration = true;
 
-  # services.lorri.enable = true;
-
   home.packages = with pkgs; [
     (nerdfonts.override {fonts = ["JetBrainsMono"];})
     nixgl.auto.nixGLDefault
@@ -55,8 +53,8 @@ in {
       '';
     };
 
-    sessionPath = [
-      "$HOME/.local/bin"
-    ];
+    # sessionPath = [
+    #   "$HOME/.local/bin"
+    # ];
   };
 }
