@@ -1,7 +1,10 @@
-{ pkgs, lib, username, ... }:
-
 {
-  networking.hostName = "nixos";
+  pkgs,
+  lib,
+  username,
+  ...
+}: {
+  networking.hostName = "nixsl";
 
   programs.zsh.enable = true;
   environment.pathsToLink = ["/share/zsh"];

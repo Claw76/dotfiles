@@ -7,7 +7,7 @@ lib: # This file contains one function that needs "lib" passed to it
 	settings = {
 		add_newline = true;
 		format = lib.concatStrings [
-			"[╭╴](238)$env_var"
+			"[╭╴](238)" # $env_var
 				"$sudo"
 				"$username"
 				"$hostname"

@@ -1,8 +1,7 @@
 {
   description = "My Personal NixOS Configuration Files";
 
-  inputs =
-  {
+  inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
@@ -28,13 +27,30 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, nur, home-manager, nixos-wsl, nix-index-database, flake-utils, nixgl, ... }:
-    let
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    nur,
+    home-manager,
+    nixos-wsl,
+    nix-index-database,
+    flake-utils,
+    nixgl,
+    ...
+  }: let
     username = "len";
-  in
-  {
+    pkgs = nixpkgs.legacyPackages."x86_64-linux";
+  in {
     nixosConfigurations = (
-	import ./machines { inherit (nixpkgs) lib; inherit inputs nixpkgs nixpkgs-unstable nur home-manager nixos-wsl nix-index-database flake-utils nixgl username; }
-	);
+      import ./machines {
+        inherit (nixpkgs) lib;
+        inherit inputs nixpkgs nixpkgs-unstable nur home-manager nixos-wsl nix-index-database flake-utils nixgl username;
+      }
+    );
+
+    devShells.x86_64-linux.default = pkgs.mkShell {
+      buildInputs = with pkgs; [nil alejandra];
+    };
   };
 }
