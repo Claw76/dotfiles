@@ -40,7 +40,7 @@
     ...
   }: let
     username = "len";
-    pkgs = nixpkgs.legacyPackages."x86_64-linux";
+    # pkgs = nixpkgs.legacyPackages."x86_64-linux";
   in {
     nixosConfigurations = (
       import ./machines {
@@ -49,8 +49,8 @@
       }
     );
 
-    devShells.x86_64-linux.default = pkgs.mkShell {
-      buildInputs = with pkgs; [nil alejandra];
-    };
+    # devShells.x86_64-linux.default = pkgs.mkShell {
+    #   buildInputs = with pkgs; [nil alejandra];
+    # };
   };
 }

@@ -40,6 +40,8 @@ in {
     (nerdfonts.override {fonts = ["JetBrainsMono"];})
     nixgl.auto.nixGLDefault
     (nixGLWrap alacritty)
+    alejandra
+    nil
   ];
 
   home = {

@@ -1,33 +1,38 @@
-{ config, lib, pkgs, inputs, username, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  inputs,
+  username,
+  ...
+}: {
   nixpkgs.config.allowUnfree = true;
-  
+
   programs.zsh.enable = true;
 
   users.users.${username} = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "docker" "media" ];
+    extraGroups = ["networkmanager" "wheel" "docker" "media"];
     shell = pkgs.zsh;
   };
 
   environment.systemPackages = with pkgs; [
-      acpi
-      fd
-      gcc
-      git
-      htop
-      openssh
-      openssl
-      ripgrep
-      tmux
-      tree
-      unzip
-      usbutils
-      wget
-      xclip
-      zip
-    ];
+    acpi
+    fd
+    gcc
+    git
+    htop
+    openssh
+    openssl
+    ripgrep
+    tmux
+    tree
+    unzip
+    usbutils
+    wget
+    xclip
+    zip
+  ];
 
   # Allow dynamic linking of packages I build
   programs.nix-ld.enable = true;
@@ -44,21 +49,21 @@
     '';
   };
 
-  # services = {
-  #   pipewire = {
-  #     enable = true;
-  #     alsa = {
-  #       enable = true;
-  #       support32Bit = true;
-  #     };
-  #     pulse.enable = true;
-  #   };
-  # };
+  services = {
+    pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+    };
+  };
 
-  fonts.fonts = [ pkgs.corefonts ];
+  fonts.fonts = [pkgs.corefonts];
 
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = false;
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
 
   # programs.ssh.askPassword = "";
 
@@ -68,9 +73,9 @@
       enableOnBoot = true;
     };
   };
-  
+
   # isolate this into each machine config
-  
+
   # services.xserver.enable = true;
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;

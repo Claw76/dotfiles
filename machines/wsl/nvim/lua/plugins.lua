@@ -3,10 +3,10 @@ function viaNix(name)
   local p = ""
   local nixpath = vim.opt.packpath["_value"]
   for sub in string.gmatch(nixpath, "[^,]+") do
-    p = sub 
+    p = sub
     break
   end
-  return p ..  "/pack/myNeovimPackages/start/" .. name
+  return p .. "/pack/myNeovimPackages/start/" .. name
 end
 
 return {
@@ -26,8 +26,8 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      -- 'williamboman/mason.nvim',
+      -- 'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -55,7 +55,7 @@ return {
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -139,26 +139,26 @@ return {
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
       -- Only load if `make` is available. Make sure you have the system
       -- requirements installed.
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        -- NOTE: If you are having trouble with this installation,
-        --       refer to the README for telescope-fzf-native for more instructions.
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
+      -- NOTE: Install fzf-native via nix
+      -- {
+      --   'nvim-telescope/telescope-fzf-native.nvim',
+      --   -- NOTE: If you are having trouble with this installation,
+      --   --       refer to the README for telescope-fzf-native for more instructions.
+      --   build = 'make',
+      --   cond = function()
+      --     return vim.fn.executable 'make' == 1
+      --   end,
+      -- },
     },
   },
 
   {
     -- Highlight, edit, and navigate code
-    dir = viaNix("nvim-treesitter"), 
-	name = "nvim-treesitter",
+    dir = viaNix("nvim-treesitter"),
+    name = "nvim-treesitter",
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
-    build = ':TSUpdate',
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -175,13 +175,13 @@ return {
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
 }
-	-- 
-	-- { dir = viaNix("ondedark.nvim"), name = "onedark" },
-	-- { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-	-- "nvim-treesitter/nvim-treesitter-textobjects",
-	-- "mbbill/undotree",
-	-- "lewis6991/gitsigns.nvim",
-	-- "nvim-lualine/lualine.nvim",
-	-- "lukas-reineke/indent-blankline.nvim",
-	-- "numToStr/Comment.nvim",
-	-- "tpope/vim-sleuth",
+--
+-- { dir = viaNix("ondedark.nvim"), name = "onedark" },
+-- { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+-- "nvim-treesitter/nvim-treesitter-textobjects",
+-- "mbbill/undotree",
+-- "lewis6991/gitsigns.nvim",
+-- "nvim-lualine/lualine.nvim",
+-- "lukas-reineke/indent-blankline.nvim",
+-- "numToStr/Comment.nvim",
+-- "tpope/vim-sleuth",
