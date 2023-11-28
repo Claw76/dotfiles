@@ -30,6 +30,7 @@ require("lazy").setup("plugins", {
 
 require("config")
 
+
 -- function dump(o)
 --    if type(o) == 'table' then
 --       local s = '{ '
@@ -59,4 +60,3 @@ require("config")
 -- print(n)
 
 -- pack/myNeovimPackages/start/nvim-treesitter
-
